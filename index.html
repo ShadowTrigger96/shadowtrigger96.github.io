@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Richard Tompos — Portfólió</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide ikonok -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body class="min-h-screen w-full text-white" style="background: linear-gradient(to bottom,#0a2342,#0a2342EE,#102a4d);">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 glass border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-full bg-white/10 grid place-items-center">
+          <i data-lucide="code-2" class="h-5 w-5"></i>
+        </div>
+        <span class="font-semibold tracking-wide">Richard Tompos</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#projects" class="opacity-90 hover:opacity-100">Projektek</a>
+        <a href="#skills"   class="opacity-90 hover:opacity-100">Tech stack</a>
+        <a href="#contact"  class="opacity-90 hover:opacity-100">Kapcsolat</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a href="https://www.linkedin.com/in/rich%C3%A1rd-tompos-974949168/" target="_blank" rel="noreferrer" aria-label="LinkedIn" class="p-2 rounded-full hover:bg-white/10">
+          <i data-lucide="linkedin" class="h-5 w-5"></i>
+        </a>
+        <a href="https://github.com/ShadowTrigger96" target="_blank" rel="noreferrer" aria-label="GitHub" class="p-2 rounded-full hover:bg-white/10">
+          <i data-lucide="github" class="h-5 w-5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-14">
+    <div class="grid md:grid-cols-[240px_1fr] gap-8 items-center">
+      <img src="https://images.unsplash.com/photo-1541534401786-2077eed87a56?q=80&w=400&auto=format&fit=crop"
+           alt="Richard Tompos" class="h-40 w-40 md:h-56 md:w-56 rounded-full object-cover ring-4 ring-white/10 shadow-2xl mx-auto md:mx-0">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Richard Tompos</h1>
+        <p class="mt-2 text-lg md:text-xl text-slate-100/90 font-semibold">Full Stack Developer</p>
+        <p class="mt-3 max-w-2xl text-slate-100/85">
+          Webes alkalmazásokat és webshopokat építek — a Carsystemshop.hu teljes fejlesztését és üzemeltetését is én viszem.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="#contact" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
+            <i data-lucide="mail" class="h-5 w-5"></i> Kapcsolatfelvétel
+          </a>
+          <a href="#projects" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
+            <i data-lucide="arrow-up-right" class="h-5 w-5"></i> Projektek megtekintése
+          </a>
+        </div>
+        <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> WooCommerce & WordPress specialista</li>
+          <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> Next.js • TypeScript • Tailwind</li>
+          <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> API-integrációk, automations, SEO</li>
+          <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> Teljesítmény-optimalizálás és biztonság</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects (includes case study) -->
+  <section id="projects" class="bg-[#0a2342]/20 border-y border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-14">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="globe" class="h-5 w-5"></i></div>
+        <h2 class="text-2xl md:text-3xl font-bold">Projektek</h2>
+      </div>
+      <div class="grid md:grid-cols-1 gap-6">
+        <div class="glass border border-white/10 rounded-2xl">
+          <div class="p-6 border-b border-white/10">
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-xl font-semibold">Carsystemshop.hu</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-white/10">fejlesztés • SEO • üzemeltetés</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-slate-100/90 text-sm leading-relaxed">
+              WooCommerce alapú áruház: architektúra, UX, termékstruktúra, fizetési és szállítási integrációk, teljesítmény-optimalizálás (cache, CDN), SEO.
+              Kiemelt fókusz: megbízhatóság és üzleti konverzió.
+            </p>
+            <ul class="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+              <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">Stabil alap</strong><span class="opacity-80">WooCommerce + egyedi beállítások</span></li>
+              <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">Gyors betöltés</strong><span class="opacity-80">Cache, CDN, optimalizált képek</span></li>
+              <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">Integrációk</strong><span class="opacity-80">Fizetés, számlázás, logisztika</span></li>
+              <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">SEO</strong><span class="opacity-80">Struktúra, schema, meta, gyors oldal</span></li>
+            </ul>
+            <div class="mt-5 flex flex-wrap gap-2 text-xs opacity-90">
+              <span class="px-2 py-1 rounded bg-white/10">WordPress</span>
+              <span class="px-2 py-1 rounded bg-white/10">WooCommerce</span>
+              <span class="px-2 py-1 rounded bg-white/10">PHP</span>
+              <span class="px-2 py-1 rounded bg-white/10">MySQL</span>
+              <span class="px-2 py-1 rounded bg-white/10">Redis</span>
+              <span class="px-2 py-1 rounded bg-white/10">Cloudflare</span>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-4">
+              <a href="https://carsystemshop.hu/" target="_blank" rel="noreferrer"
+                 class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
+                Megnyitás <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="mx-auto max-w-6xl px-4 py-14">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="wrench" class="h-5 w-5"></i></div>
+      <h2 class="text-2xl md:text-3xl font-bold">Tech stack & fókusz</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass border border-white/10 rounded-2xl">
+        <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="paintbrush" class="h-5 w-5"></i>Frontend</div>
+        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+          <p>React, Next.js, TypeScript, Tailwind, shadcn/ui</p>
+          <p>Reszponzív UI, SEO-barát felépítés, animációk</p>
+        </div>
+      </div>
+      <div class="glass border border-white/10 rounded-2xl">
+        <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="code-2" class="h-5 w-5"></i>Backend</div>
+        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+          <p>Node.js, Express/Nest, Prisma, PostgreSQL/MySQL</p>
+          <p>REST/GraphQL API, autentikáció, jogosultság</p>
+        </div>
+      </div>
+      <div class="glass border border-white/10 rounded-2xl">
+        <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="rocket" class="h-5 w-5"></i>Webshop & üzemeltetés</div>
+        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+          <p>WordPress + WooCommerce, bővítmény fejlesztés</p>
+          <p>Cache, CDN, monitorozás, skálázás, biztonság</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="bg-[#0a2342]/30 border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-14">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="mail" class="h-5 w-5"></i></div>
+        <h2 class="text-2xl md:text-3xl font-bold">Kapcsolat</h2>
+      </div>
+      <p class="text-slate-100/85 max-w-2xl">
+        Nyitott vagyok új projektekre, közreműködésre és szakmai kapcsolatokra. Ha érdekel az együttműködés, írj nyugodtan, vagy keresd fel a LinkedIn profilomat.
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a href="mailto:tompos.ricsi@gmail.com" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
+          <i data-lucide="mail" class="h-5 w-5"></i> Email
+        </a>
+        <a href="https://www.linkedin.com/in/rich%C3%A1rd-tompos-974949168/" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
+          <i data-lucide="linkedin" class="h-5 w-5"></i> LinkedIn
+        </a>
+        <a href="https://github.com/ShadowTrigger96" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
+          <i data-lucide="github" class="h-5 w-5"></i> GitHub
+        </a>
+      </div>
+      <p class="mt-6 text-sm text-slate-100/60">Hungary • EU</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-6 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
+      <span class="opacity-80">© <span id="year"></span> Richard Tompos</span>
+      <a class="inline-flex items-center gap-1 opacity-90 hover:opacity-100" href="#" title="Oldal teteje">
+        Vissza a tetejére <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // ikonok kirajzolása
+    window.lucide && window.lucide.createIcons();
+    // év frissítés
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
