@@ -4,16 +4,147 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Richard Tompos — Portfólió</title>
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide ikonok -->
+  <!-- Lucide (maradhat a többi ikonhoz) -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Spidey headline betű -->
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
   <style>
     html { scroll-behavior: smooth; }
     .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
+
+    /* 🎨 Spidey/Marvel paletta */
+    :root{
+      --sp-red:#e62429;       /* Marvel vörös */
+      --sp-gray:#cfd2d3;      /* világos szürke */
+      --sp-steel:#3b5068;     /* acélkék */
+      --sp-navy:#0f1e33;      /* sötétkék */
+      --sp-navy-2:#0b1d36;    /* sötétebb */
+      --web-fg: rgba(255,255,255,.12); /* háló vonalak */
+    }
+
+    /* Oldalháttér */
+    body{
+      background:
+        radial-gradient(1200px 600px at 90% -10%, rgba(230,36,41,.10), transparent 60%),
+        linear-gradient(to bottom, var(--sp-navy), var(--sp-navy-2));
+      color:#fff;
+    }
+
+    /* ===== ÚJ: Spidey pókháló háttér – sarokból indul, finom =====
+       - A szekció kap egy .corner-web class-t, és ez a ::before rajzolja rá.
+    */
+    .corner-web{
+      position: relative;
+      overflow: hidden;
+    }
+    .corner-web::before{
+      content:"";
+      position:absolute; inset:0; pointer-events:none;
+      /* maszkoljuk, hogy csak a bal felső sarokban legyen erős, középen elhalványuljon */
+      -webkit-mask:
+        radial-gradient(700px 400px at -5% -10%, black 55%, transparent 65%) 0 0/100% 100% no-repeat;
+              mask:
+        radial-gradient(700px 400px at -5% -10%, black 55%, transparent 65%) 0 0/100% 100% no-repeat;
+
+      /* a háló: néhány sugár + pár koncentrikus ív, árnyékszerűen */
+      background:
+        /* sugár irányok */
+        conic-gradient(from 12deg at 0% 0%, var(--web-fg) 2deg, transparent 2deg 30deg, var(--web-fg) 31deg 33deg, transparent 33deg 57deg, var(--web-fg) 58deg 60deg, transparent 60deg 86deg, var(--web-fg) 87deg 89deg, transparent 89deg 360deg),
+        /* koncentrikus ívek */
+        radial-gradient(120px 60px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(180px 80px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(240px 100px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(320px 120px at 0% 0%, var(--web-fg) 2px, transparent 3px);
+      opacity:.7;  /* visszafogott */
+    }
+
+    /* ===== 2) Szekció ikon kapszula – képregényes "burst" ===== */
+    .sp-badge{
+      width:2.25rem; height:2.25rem; border-radius:.75rem;
+      display:grid; place-items:center; color:#fff;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), transparent 45%),
+        linear-gradient(145deg, var(--sp-red), #8c0d12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 8px 18px rgba(0,0,0,.35);
+    }
+    .sp-badge svg{ display:block; transform: translateY(1px); }
+
+    /* ===== 3) CTA – hálólövő anim ===== */
+    .web-shot{ position:relative; overflow:hidden; }
+    .web-shot::after{
+      content:""; position:absolute; left:-25%; top:52%;
+      width:0; height:2px; transform: translateY(-50%);
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 70%, rgba(255,255,255,0) 100%);
+      filter: drop-shadow(0 0 6px #fff);
+      transition: width .28s ease, left .28s ease;
+    }
+    .web-shot:hover::after{ left:0; width:135%; }
+    .web-shot::before{
+      content:""; position:absolute; left:-8%; top:52%;
+      width:6px; height:6px; transform:translate(-50%,-50%); border-radius:9999px;
+      background:#fff; opacity:0; transition:opacity .18s ease, left .28s ease;
+    }
+    .web-shot:hover::before{ opacity:1; left:100%; }
+
+    /* ===== 4) Headline – visszafogott, képregényes outline ===== */
+    .sp-title{
+      font-family:"Bangers", system-ui, sans-serif;
+      font-weight:800; letter-spacing:.6px; line-height:1;
+      display:inline-block; color:#fff;
+      transform: skewX(-6deg) rotate(-0.5deg);
+      -webkit-text-stroke: 1px rgba(0,0,0,.65);
+      text-shadow:
+        0 3px 0 rgba(0,0,0,.35),
+        0 0 18px rgba(226,36,41,.35);
+      padding:.05rem .2rem;
+    }
+
+    /* ===== 5) Projektkártya – finom panel keret (háló nélkül) ===== */
+    .card-web{
+      background:
+        radial-gradient(80% 80% at 20% 10%, rgba(255,255,255,.03), transparent 70%),
+        rgba(255,255,255,.04);
+    }
+    .panel-border{
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.08),
+        0 10px 22px rgba(0,0,0,.35);
+      border-radius:16px;
+    }
+    .tag-pill{
+      border:1px solid rgba(255,255,255,.20);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    }
+
+    /* Halftone (Ben-Day) textúra a hero/projektek alatt – nagyon finoman */
+    .halftone:before{
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,.08) 2px, transparent 2.5px) 0 0/8px 8px,
+        radial-gradient(circle at 75% 75%, rgba(0,0,0,.18) 2px, transparent 2.5px) 0 0/9px 9px;
+      mix-blend-mode:soft-light; opacity:.28;
+    }
+
+    /* Mini web-blast ikon igazítása a gombokban */
+    .web-blast svg { transform: translateX(0); transition: transform .22s ease; }
+    .web-blast:hover svg { transform: translateX(2px); }
+
+    /* Avatar finom pókháló (külön, hogy ne kavarjon a layouttal) */
+    .avatar-web{
+      position:absolute; inset:0; border-radius:9999px; pointer-events:none;
+      background:
+        repeating-conic-gradient(from 0deg, transparent 0 16deg, rgba(255,255,255,.10) 16deg 17deg),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0 18px, rgba(255,255,255,.08) 18px 19px);
+      mix-blend-mode:screen; opacity:.8;
+    }
   </style>
 </head>
-<body class="min-h-screen w-full text-white" style="background: linear-gradient(to bottom,#0a2342,#0a2342EE,#102a4d);">
+
+<body class="min-h-screen w-full">
   <!-- Navbar -->
   <header class="sticky top-0 z-40 glass border-b border-white/10">
     <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
@@ -39,25 +170,47 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-14">
+  <!-- ===== HERO ===== -->
+  <section class="hero-wrap mx-auto max-w-6xl px-4 pt-16 pb-14 relative halftone corner-web">
     <div class="grid md:grid-cols-[240px_1fr] gap-8 items-center">
-      <img src="profpic.jpg"
-           alt="Richard Tompos" class="h-40 w-40 md:h-56 md:w-56 rounded-full object-cover ring-4 ring-red-600 shadow-lg mx-auto md:mx-0">
+      <!-- Avatar -->
+      <div class="avatar-shell h-40 w-40 md:h-56 md:w-56 rounded-full mx-auto md:mx-0 relative">
+        <!-- pajzs-gyűrű -->
+        <span style="content:'';position:absolute;inset:-8px;border-radius:9999px;background:
+          conic-gradient(var(--sp-red) 0 120deg,#ffffff 120deg 124deg,var(--sp-navy) 124deg 240deg,#ffffff 240deg 244deg,var(--sp-red) 244deg 360deg);
+          box-shadow:0 12px 28px rgba(0,0,0,.45)"></span>
+        <img src="profpic.jpg"
+             alt="Richard Tompos"
+             class="relative z-10 h-full w-full rounded-full object-cover ring-2 ring-[var(--sp-gray)] shadow-2xl">
+        <span class="avatar-web"></span>
+      </div>
+
       <div>
-        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Richard Tompos</h1>
+        <h1 class="sp-title text-3xl md:text-5xl !font-extrabold !leading-tight opacity-95">RICHARD TOMPOS</h1>
         <p class="mt-2 text-lg md:text-xl text-slate-100/90 font-semibold">Full Stack Developer</p>
         <p class="mt-3 max-w-2xl text-slate-100/85">
           Webes alkalmazásokat és webshopokat építek — a Carsystemshop.hu teljes fejlesztését és üzemeltetését is én viszem.
         </p>
+
         <div class="mt-6 flex flex-wrap items-center gap-3">
-          <a href="#contact" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
-            <i data-lucide="mail" class="h-5 w-5"></i> Kapcsolatfelvétel
+          <a href="#contact" class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M2 12h20" stroke="white" stroke-width="2"/>
+              <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
+              <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+            Kapcsolatfelvétel
           </a>
-          <a href="#projects" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
-            <i data-lucide="arrow-up-right" class="h-5 w-5"></i> Projektek megtekintése
+          <a href="#projects" class="web-blast inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M2 12h20" stroke="white" stroke-width="2"/>
+              <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
+              <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+            Projektek megtekintése
           </a>
         </div>
+
         <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> WooCommerce & WordPress specialista</li>
           <li class="flex items-center gap-2 text-slate-50/90"><i data-lucide="shield-check" class="h-5 w-5"></i> Next.js • TypeScript • Tailwind</li>
@@ -68,21 +221,25 @@
     </div>
   </section>
 
-  <!-- Projects (includes case study) -->
-  <section id="projects" class="bg-[#0a2342]/20 border-y border-white/10">
-    <div class="mx-auto max-w-6xl px-4 py-14">
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="relative bg-[rgba(255,255,255,0.04)] border-y border-white/10 corner-web">
+    <div class="mx-auto max-w-6xl px-4 py-14 relative">
       <div class="flex items-center gap-3 mb-6">
-        <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="globe" class="h-5 w-5"></i></div>
+        <div class="sp-badge">
+          <svg width="18" height="18"><use href="#icon-burst"/></svg>
+        </div>
         <h2 class="text-2xl md:text-3xl font-bold">Projektek</h2>
       </div>
+
       <div class="grid md:grid-cols-1 gap-6">
-        <div class="glass border border-white/10 rounded-2xl">
+        <div class="glass border border-white/10 rounded-2xl card-web panel-border">
           <div class="p-6 border-b border-white/10">
             <div class="flex items-center justify-between gap-3">
               <span class="text-xl font-semibold">Carsystemshop.hu</span>
-              <span class="text-xs px-2 py-1 rounded-full bg-white/10">fejlesztés • SEO • üzemeltetés</span>
+              <span class="text-xs px-2 py-1 rounded-full tag-pill">fejlesztés • SEO • üzemeltetés</span>
             </div>
           </div>
+
           <div class="p-6">
             <p class="text-slate-100/90 text-sm leading-relaxed">
               WooCommerce alapú áruház: architektúra, UX, termékstruktúra, fizetési és szállítási integrációk, teljesítmény-optimalizálás (cache, CDN), SEO.
@@ -94,32 +251,43 @@
               <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">Integrációk</strong><span class="opacity-80">Fizetés, számlázás, logisztika</span></li>
               <li class="rounded-xl bg-white/5 p-4 border border-white/10"><strong class="block text-white text-lg">SEO</strong><span class="opacity-80">Struktúra, schema, meta, gyors oldal</span></li>
             </ul>
+
             <div class="mt-5 flex flex-wrap gap-2 text-xs opacity-90">
-              <span class="px-2 py-1 rounded bg-white/10">WordPress</span>
-              <span class="px-2 py-1 rounded bg-white/10">WooCommerce</span>
-              <span class="px-2 py-1 rounded bg-white/10">PHP</span>
-              <span class="px-2 py-1 rounded bg-white/10">MySQL</span>
-              <span class="px-2 py-1 rounded bg-white/10">Redis</span>
-              <span class="px-2 py-1 rounded bg-white/10">Cloudflare</span>
+              <span class="px-2 py-1 rounded tag-pill">WordPress</span>
+              <span class="px-2 py-1 rounded tag-pill">WooCommerce</span>
+              <span class="px-2 py-1 rounded tag-pill">PHP</span>
+              <span class="px-2 py-1 rounded tag-pill">MySQL</span>
+              <span class="px-2 py-1 rounded tag-pill">Redis</span>
+              <span class="px-2 py-1 rounded tag-pill">Cloudflare</span>
             </div>
+
             <div class="mt-6 flex flex-wrap gap-4">
               <a href="https://carsystemshop.hu/" target="_blank" rel="noreferrer"
-                 class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
-                Megnyitás <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+                 class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M2 12h20" stroke="white" stroke-width="2"/>
+                  <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
+                  <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+                </svg>
+                Megnyitás
               </a>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- Skills -->
-  <section id="skills" class="mx-auto max-w-6xl px-4 py-14">
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="mx-auto max-w-6xl px-4 py-14 corner-web">
     <div class="flex items-center gap-3 mb-6">
-      <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="wrench" class="h-5 w-5"></i></div>
+      <div class="sp-badge">
+        <svg width="18" height="18"><use href="#icon-burst"/></svg>
+      </div>
       <h2 class="text-2xl md:text-3xl font-bold">Tech stack & fókusz</h2>
     </div>
+
     <div class="grid md:grid-cols-3 gap-6">
       <div class="glass border border-white/10 rounded-2xl">
         <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="paintbrush" class="h-5 w-5"></i>Frontend</div>
@@ -145,19 +313,28 @@
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="bg-[#0a2342]/30 border-t border-white/10">
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="bg-[rgba(255,255,255,0.04)] border-t border-white/10 corner-web">
     <div class="mx-auto max-w-6xl px-4 py-14">
       <div class="flex items-center gap-3 mb-6">
-        <div class="h-9 w-9 rounded-xl bg-white/10 grid place-items-center"><i data-lucide="mail" class="h-5 w-5"></i></div>
+        <div class="sp-badge">
+          <svg width="18" height="18"><use href="#icon-burst"/></svg>
+        </div>
         <h2 class="text-2xl md:text-3xl font-bold">Kapcsolat</h2>
       </div>
+
       <p class="text-slate-100/85 max-w-2xl">
         Nyitott vagyok új projektekre, közreműködésre és szakmai kapcsolatokra. Ha érdekel az együttműködés, írj nyugodtan, vagy keresd fel a LinkedIn profilomat.
       </p>
+
       <div class="mt-6 flex flex-wrap items-center gap-3">
-        <a href="mailto:tompos.ricsi@gmail.com" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-xl">
-          <i data-lucide="mail" class="h-5 w-5"></i> Email
+        <a href="mailto:tompos.ricsi@gmail.com" class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M2 12h20" stroke="white" stroke-width="2"/>
+            <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
+            <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+          </svg>
+          Email
         </a>
         <a href="https://www.linkedin.com/in/rich%C3%A1rd-tompos-974949168/" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
           <i data-lucide="linkedin" class="h-5 w-5"></i> LinkedIn
@@ -166,24 +343,32 @@
           <i data-lucide="github" class="h-5 w-5"></i> GitHub
         </a>
       </div>
+
       <p class="mt-6 text-sm text-slate-100/60">Hungary • EU</p>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer class="border-t border-white/10">
     <div class="mx-auto max-w-6xl px-4 py-6 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
       <span class="opacity-80">© <span id="year"></span> Richard Tompos</span>
-      <a class="inline-flex items-center gap-1 opacity-90 hover:opacity-100" href="#" title="Oldal teteje">
+      <span class="opacity-75 italic">“With great power comes great responsibility.”</span>
+      <a class="inline-flex items-center gap-1 opacity-90 hover:opacity-100" href="#" title="Oldal tetejére">
         Vissza a tetejére <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
       </a>
     </div>
   </footer>
 
+  <!-- ===== SVG sprite: comic "burst" ikon ===== -->
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="icon-burst" viewBox="0 0 24 24">
+      <path d="M12 2l2.2 4.4L19 6l-3.3 3 1 4.2-3.7-2-3.7 2 1-4.2L5 6l4.8.4L12 2Z"
+            fill="white" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
   <script>
-    // ikonok kirajzolása
     window.lucide && window.lucide.createIcons();
-    // év frissítés
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
