@@ -7,146 +7,172 @@
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide (maradhat a többi ikonhoz) -->
+  <!-- Lucide (ikonok) -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Spidey headline betű -->
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
   <style>
     html { scroll-behavior: smooth; }
-    .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
 
-    /* 🎨 Spidey/Marvel paletta */
     :root{
-      --sp-red:#e62429;       /* Marvel vörös */
-      --sp-gray:#cfd2d3;      /* világos szürke */
-      --sp-steel:#3b5068;     /* acélkék */
-      --sp-navy:#0f1e33;      /* sötétkék */
-      --sp-navy-2:#0b1d36;    /* sötétebb */
-      --web-fg: rgba(255,255,255,.12); /* háló vonalak */
+      --sp-red:#e62429;
+      --sp-gray:#cfd2d3;
+      --sp-steel:#3b5068;
+      --sp-navy:#0f1e33;
+      --sp-navy-2:#0b1d36;
+      --web-fg: rgba(255,255,255,.12);
+      --web-fg-2: rgba(255,255,255,.08);
     }
 
-    /* Oldalháttér */
     body{
-      background:
-        radial-gradient(1200px 600px at 90% -10%, rgba(230,36,41,.10), transparent 60%),
-        linear-gradient(to bottom, var(--sp-navy), var(--sp-navy-2));
       color:#fff;
+      background: linear-gradient(to bottom, var(--sp-navy), var(--sp-navy-2));
+      min-height:100vh;
     }
 
-    /* ===== ÚJ: Spidey pókháló háttér – sarokból indul, finom =====
-       - A szekció kap egy .corner-web class-t, és ez a ::before rajzolja rá.
-    */
-    .corner-web{
-      position: relative;
-      overflow: hidden;
+    /* Finom ferde rács a teljes oldalon */
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:-2;
+      background:
+        linear-gradient(115deg, transparent 0 48%, var(--web-fg-2) 49%, transparent 51%) 0 0/22px 22px,
+        linear-gradient(295deg, transparent 0 48%, var(--web-fg-2) 49%, transparent 51%) 0 0/22px 22px;
+      opacity:.08;
     }
-    .corner-web::before{
-      content:"";
-      position:absolute; inset:0; pointer-events:none;
-      /* maszkoljuk, hogy csak a bal felső sarokban legyen erős, középen elhalványuljon */
+
+    /* Pókháló textúra — CSAK ott használjuk, ahová az osztályt rátesszük */
+    .web-corners{ position: relative; isolation:isolate; }
+    .web-corners::before,
+    .web-corners::after{
+      content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        conic-gradient(from 8deg at 0% 0%, var(--web-fg) 2deg, transparent 2.2deg 32deg, var(--web-fg) 32.8deg 34.2deg, transparent 34.2deg 86deg, var(--web-fg) 86.6deg 88deg, transparent 88deg 360deg),
+        radial-gradient(140px 70px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(210px 90px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(280px 110px at 0% 0%, var(--web-fg) 2px, transparent 3px),
+        radial-gradient(360px 130px at 0% 0%, var(--web-fg) 2px, transparent 3px);
+      opacity:.28;
       -webkit-mask:
-        radial-gradient(700px 400px at -5% -10%, black 55%, transparent 65%) 0 0/100% 100% no-repeat;
+        radial-gradient(820px 520px at -6% -10%, black 45%, rgba(0,0,0,.5) 60%, transparent 72%);
               mask:
-        radial-gradient(700px 400px at -5% -10%, black 55%, transparent 65%) 0 0/100% 100% no-repeat;
-
-      /* a háló: néhány sugár + pár koncentrikus ív, árnyékszerűen */
-      background:
-        /* sugár irányok */
-        conic-gradient(from 12deg at 0% 0%, var(--web-fg) 2deg, transparent 2deg 30deg, var(--web-fg) 31deg 33deg, transparent 33deg 57deg, var(--web-fg) 58deg 60deg, transparent 60deg 86deg, var(--web-fg) 87deg 89deg, transparent 89deg 360deg),
-        /* koncentrikus ívek */
-        radial-gradient(120px 60px at 0% 0%, var(--web-fg) 2px, transparent 3px),
-        radial-gradient(180px 80px at 0% 0%, var(--web-fg) 2px, transparent 3px),
-        radial-gradient(240px 100px at 0% 0%, var(--web-fg) 2px, transparent 3px),
-        radial-gradient(320px 120px at 0% 0%, var(--web-fg) 2px, transparent 3px);
-      opacity:.7;  /* visszafogott */
+        radial-gradient(820px 520px at -6% -10%, black 45%, rgba(0,0,0,.5) 60%, transparent 72%);
+    }
+    .web-corners::after{
+      transform: scaleX(-1) scaleY(-1);
+      -webkit-mask:
+        radial-gradient(820px 520px at 106% 110%, black 45%, rgba(0,0,0,.5) 60%, transparent 72%);
+              mask:
+        radial-gradient(820px 520px at 106% 110%, black 45%, rgba(0,0,0,.5) 60%, transparent 72%);
+      opacity:.23;
     }
 
-    /* ===== 2) Szekció ikon kapszula – képregényes "burst" ===== */
-    .sp-badge{
-      width:2.25rem; height:2.25rem; border-radius:.75rem;
-      display:grid; place-items:center; color:#fff;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), transparent 45%),
-        linear-gradient(145deg, var(--sp-red), #8c0d12);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 8px 18px rgba(0,0,0,.35);
-    }
-    .sp-badge svg{ display:block; transform: translateY(1px); }
+    /* Szekció díszítések */
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); }
+    .panel-border{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 22px rgba(0,0,0,.35); border-radius:16px; }
+    .card-web{ background: radial-gradient(80% 80% at 20% 10%, rgba(255,255,255,.03), transparent 70%), rgba(255,255,255,.04); }
+    .tag-pill{ border:1px solid rgba(255,255,255,.20); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03)); }
+    .glass-nav{ background: rgba(255,255,255,0.06); backdrop-filter: blur(8px); }
+    .section-divider{ position:relative; isolation:isolate; }
+    .section-divider::before{ content:""; position:absolute; inset:0 0 auto 0; height:8px; pointer-events:none; background: linear-gradient(to bottom, rgba(255,255,255,.10), rgba(255,255,255,0)); opacity:.08; }
 
-    /* ===== 3) CTA – hálólövő anim ===== */
+    /* Halftone az első blokk alatt */
+    .halftone:before{
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,.08) 2px, transparent 2.6px) 0 0/8px 8px,
+        radial-gradient(circle at 75% 75%, rgba(0,0,0,.18) 2px, transparent 2.6px) 0 0/9px 9px;
+      mix-blend-mode:soft-light; opacity:.24;
+    }
+
+    .sp-title{
+      font-family:"Bangers", system-ui, sans-serif;
+      font-weight:800; letter-spacing:.6px; line-height:1; display:inline-block; color:#fff;
+      transform: skewX(-6deg) rotate(-0.5deg);
+      -webkit-text-stroke: 1px rgba(0,0,0,.55);
+      text-shadow: 0 3px 0 rgba(0,0,0,.35), 0 0 18px rgba(226,36,41,.28);
+      padding:.05rem .2rem;
+    }
+
     .web-shot{ position:relative; overflow:hidden; }
     .web-shot::after{
-      content:""; position:absolute; left:-25%; top:52%;
-      width:0; height:2px; transform: translateY(-50%);
+      content:""; position:absolute; left:-24%; top:52%; width:0; height:2px; transform: translateY(-50%);
       background: linear-gradient(90deg, rgba(255,255,255,0) 0%, #fff 70%, rgba(255,255,255,0) 100%);
       filter: drop-shadow(0 0 6px #fff);
       transition: width .28s ease, left .28s ease;
     }
-    .web-shot:hover::after{ left:0; width:135%; }
+    .web-shot:hover::after{ left:0; width:134%; }
     .web-shot::before{
-      content:""; position:absolute; left:-8%; top:52%;
-      width:6px; height:6px; transform:translate(-50%,-50%); border-radius:9999px;
-      background:#fff; opacity:0; transition:opacity .18s ease, left .28s ease;
+      content:""; position:absolute; left:-8%; top:52%; width:6px; height:6px; transform:translate(-50%,-50%); border-radius:9999px; background:#fff;
+      opacity:0; transition:opacity .18s ease, left .28s ease;
     }
     .web-shot:hover::before{ opacity:1; left:100%; }
 
-    /* ===== 4) Headline – visszafogott, képregényes outline ===== */
-    .sp-title{
-      font-family:"Bangers", system-ui, sans-serif;
-      font-weight:800; letter-spacing:.6px; line-height:1;
-      display:inline-block; color:#fff;
-      transform: skewX(-6deg) rotate(-0.5deg);
-      -webkit-text-stroke: 1px rgba(0,0,0,.65);
-      text-shadow:
-        0 3px 0 rgba(0,0,0,.35),
-        0 0 18px rgba(226,36,41,.35);
-      padding:.05rem .2rem;
+    .avatar-web{ position:absolute; inset:0; border-radius:9999px; pointer-events:none;
+      background: repeating-conic-gradient(from 0deg, transparent 0 16deg, rgba(255,255,255,.10) 16deg 17deg),
+                  repeating-radial-gradient(circle at 50% 50%, transparent 0 18px, rgba(255,255,255,.08) 18px 19px);
+      mix-blend-mode:screen; opacity:.75; }
+
+    /* ─────────────────────────────────────────────────────────────
+       KÉPREGÉNYES BESZÉDBUBORÉK (csak stíluscsere, markup változatlan)
+       ───────────────────────────────────────────────────────────── */
+    .speech-badge{
+      position:relative;
+      display:inline-flex; align-items:center; justify-content:center;
+      width:2.8rem; height:2.2rem; line-height:1;
+      border-radius:999px;
+      background:#fff;
+      color:#111;
+      border:2px solid #000;
+      box-shadow: 3px 3px 0 #000, 0 8px 20px rgba(0,0,0,.25);
+      font-weight:800;
+    }
+    .speech-badge::after{
+      /* kis képregényes „farkinca” */
+      content:""; position:absolute; bottom:-8px; left:18px;
+      width:14px; height:14px; transform: rotate(45deg);
+      background:#fff;
+      border-left:2px solid #000; border-bottom:2px solid #000;
+      border-bottom-left-radius:3px;
+      box-shadow: 2px 2px 0 #000;
     }
 
-    /* ===== 5) Projektkártya – finom panel keret (háló nélkül) ===== */
-    .card-web{
+    /* Hero skyline — NEW YORK CITY sziluett (Spider-Man ref) */
+    .hero-wrap{ position:relative; }
+    .hero-wrap::after{
+      content:""; position:absolute; left:0; right:0; bottom:-2px; height:180px; pointer-events:none; z-index:2; opacity:.35;
       background:
-        radial-gradient(80% 80% at 20% 10%, rgba(255,255,255,.03), transparent 70%),
-        rgba(255,255,255,.04);
-    }
-    .panel-border{
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.08),
-        0 10px 22px rgba(0,0,0,.35);
-      border-radius:16px;
-    }
-    .tag-pill{
-      border:1px solid rgba(255,255,255,.20);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 260" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="%23cfd2d3" stop-opacity="0.38"/><stop offset="1" stop-color="%23cfd2d3" stop-opacity="0.06"/></linearGradient></defs><rect width="1440" height="260" fill="transparent"/><!-- NYC stilizalt sziluett: One WTC, Empire State, Chrysler, lapos tetok --><path d="M0 230h40v-30h20v30h30v-60h28v60h36v-40h24v40h38v-80h26v80h42v-55h18v35h24v20h40v-110h22v25h16v-40h18v125h44v-40h22v-85h26v45h16v-20h18v100h46v-30h20v-90h18v20h16v100h52v-45h24v-120h16v25h14v-35h12v155h54v-55h20v25h18v-80h16v110h60v-35h26v-95h18v20h16v110h68v-40h24v-60h18v100h60v-30h24v-85h18v115h82v-35h30v-60h24v95h36v25H0z" fill="url(%23g)"/></svg>') center/100% 100% no-repeat;
+      -webkit-mask: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0) 85%);
+              mask: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0) 85%);
     }
 
-    /* Halftone (Ben-Day) textúra a hero/projektek alatt – nagyon finoman */
-    .halftone:before{
-      content:""; position:absolute; inset:0; pointer-events:none;
-      background:
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,.08) 2px, transparent 2.5px) 0 0/8px 8px,
-        radial-gradient(circle at 75% 75%, rgba(0,0,0,.18) 2px, transparent 2.5px) 0 0/9px 9px;
-      mix-blend-mode:soft-light; opacity:.28;
+    /* Kártyaszöveg */
+    .card-copy{ color:rgba(255,255,255,.92); line-height:1.6; }
+
+    /* ÚJ: szebb, kompakt comic-bubble a "Tech stack & fókusz" címhez */
+    .bubble{
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.38rem .62rem;
+      border:1.6px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      border-radius:14px;
+      font-weight:700; font-size:.92rem; line-height:1;
+      position:relative;
     }
-
-    /* Mini web-blast ikon igazítása a gombokban */
-    .web-blast svg { transform: translateX(0); transition: transform .22s ease; }
-    .web-blast:hover svg { transform: translateX(2px); }
-
-    /* Avatar finom pókháló (külön, hogy ne kavarjon a layouttal) */
-    .avatar-web{
-      position:absolute; inset:0; border-radius:9999px; pointer-events:none;
-      background:
-        repeating-conic-gradient(from 0deg, transparent 0 16deg, rgba(255,255,255,.10) 16deg 17deg),
-        repeating-radial-gradient(circle at 50% 50%, transparent 0 18px, rgba(255,255,255,.08) 18px 19px);
-      mix-blend-mode:screen; opacity:.8;
+    .bubble::after{
+      content:""; position:absolute; left:14px; bottom:-7px;
+      width:12px; height:12px; transform: rotate(45deg);
+      background: inherit;
+      border-left:1.6px solid rgba(255,255,255,.22);
+      border-bottom:1.6px solid rgba(255,255,255,.22);
+      border-bottom-left-radius:3px;
     }
   </style>
 </head>
 
 <body class="min-h-screen w-full">
   <!-- Navbar -->
-  <header class="sticky top-0 z-40 glass border-b border-white/10">
+  <header class="sticky top-0 z-40 glass-nav border-b border-white/10">
     <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="h-9 w-9 rounded-full bg-white/10 grid place-items-center">
@@ -171,17 +197,14 @@
   </header>
 
   <!-- ===== HERO ===== -->
-  <section class="hero-wrap mx-auto max-w-6xl px-4 pt-16 pb-14 relative halftone corner-web">
-    <div class="grid md:grid-cols-[240px_1fr] gap-8 items-center">
+  <section class="hero-wrap web-corners mx-auto max-w-6xl px-4 pt-16 pb-14 relative halftone">
+    <div class="grid md:grid-cols-[240px_1fr] gap-8 items-center relative z-[2]">
       <!-- Avatar -->
       <div class="avatar-shell h-40 w-40 md:h-56 md:w-56 rounded-full mx-auto md:mx-0 relative">
-        <!-- pajzs-gyűrű -->
         <span style="content:'';position:absolute;inset:-8px;border-radius:9999px;background:
           conic-gradient(var(--sp-red) 0 120deg,#ffffff 120deg 124deg,var(--sp-navy) 124deg 240deg,#ffffff 240deg 244deg,var(--sp-red) 244deg 360deg);
           box-shadow:0 12px 28px rgba(0,0,0,.45)"></span>
-        <img src="profpic.jpg"
-             alt="Richard Tompos"
-             class="relative z-10 h-full w-full rounded-full object-cover ring-2 ring-[var(--sp-gray)] shadow-2xl">
+        <img src="profpic.jpg" alt="Richard Tompos" class="relative z-10 h-full w-full rounded-full object-cover ring-2 ring-[var(--sp-gray)] shadow-2xl">
         <span class="avatar-web"></span>
       </div>
 
@@ -193,20 +216,10 @@
         </p>
 
         <div class="mt-6 flex flex-wrap items-center gap-3">
-          <a href="#contact" class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M2 12h20" stroke="white" stroke-width="2"/>
-              <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
-              <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
-            </svg>
+          <a href="#contact" class="web-shot inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
             Kapcsolatfelvétel
           </a>
-          <a href="#projects" class="web-blast inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M2 12h20" stroke="white" stroke-width="2"/>
-              <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
-              <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
-            </svg>
+          <a href="#projects" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
             Projektek megtekintése
           </a>
         </div>
@@ -222,12 +235,10 @@
   </section>
 
   <!-- ===== PROJECTS ===== -->
-  <section id="projects" class="relative bg-[rgba(255,255,255,0.04)] border-y border-white/10 corner-web">
+  <section id="projects" class="relative bg-[rgba(255,255,255,0.04)] section-divider">
     <div class="mx-auto max-w-6xl px-4 py-14 relative">
       <div class="flex items-center gap-3 mb-6">
-        <div class="sp-badge">
-          <svg width="18" height="18"><use href="#icon-burst"/></svg>
-        </div>
+        <div class="speech-badge" aria-hidden="true"><span class="sense"></span></div>
         <h2 class="text-2xl md:text-3xl font-bold">Projektek</h2>
       </div>
 
@@ -263,12 +274,7 @@
 
             <div class="mt-6 flex flex-wrap gap-4">
               <a href="https://carsystemshop.hu/" target="_blank" rel="noreferrer"
-                 class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M2 12h20" stroke="white" stroke-width="2"/>
-                  <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
-                  <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
-                </svg>
+                 class="web-shot inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
                 Megnyitás
               </a>
             </div>
@@ -280,32 +286,30 @@
   </section>
 
   <!-- ===== SKILLS ===== -->
-  <section id="skills" class="mx-auto max-w-6xl px-4 py-14 corner-web">
+  <section id="skills" class="mx-auto max-w-6xl px-4 py-14">
     <div class="flex items-center gap-3 mb-6">
-      <div class="sp-badge">
-        <svg width="18" height="18"><use href="#icon-burst"/></svg>
-      </div>
+      <div class="speech-badge" aria-hidden="true"><span class="sense"></span></div>
       <h2 class="text-2xl md:text-3xl font-bold">Tech stack & fókusz</h2>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
       <div class="glass border border-white/10 rounded-2xl">
         <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="paintbrush" class="h-5 w-5"></i>Frontend</div>
-        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+        <div class="p-6 text-sm space-y-2 card-copy">
           <p>React, Next.js, TypeScript, Tailwind, shadcn/ui</p>
           <p>Reszponzív UI, SEO-barát felépítés, animációk</p>
         </div>
       </div>
       <div class="glass border border-white/10 rounded-2xl">
         <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="code-2" class="h-5 w-5"></i>Backend</div>
-        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+        <div class="p-6 text-sm space-y-2 card-copy">
           <p>Node.js, Express/Nest, Prisma, PostgreSQL/MySQL</p>
           <p>REST/GraphQL API, autentikáció, jogosultság</p>
         </div>
       </div>
       <div class="glass border border-white/10 rounded-2xl">
         <div class="p-6 border-b border-white/10 font-semibold flex items-center gap-2"><i data-lucide="rocket" class="h-5 w-5"></i>Webshop & üzemeltetés</div>
-        <div class="p-6 text-slate-100/90 text-sm space-y-2">
+        <div class="p-6 text-sm space-y-2 card-copy">
           <p>WordPress + WooCommerce, bővítmény fejlesztés</p>
           <p>Cache, CDN, monitorozás, skálázás, biztonság</p>
         </div>
@@ -314,12 +318,10 @@
   </section>
 
   <!-- ===== CONTACT ===== -->
-  <section id="contact" class="bg-[rgba(255,255,255,0.04)] border-t border-white/10 corner-web">
-    <div class="mx-auto max-w-6xl px-4 py-14">
+  <section id="contact" class="bg-[rgba(255,255,255,0.04)] section-divider">
+    <div class="mx-auto max-w-6xl px-4 py-14 relative">
       <div class="flex items-center gap-3 mb-6">
-        <div class="sp-badge">
-          <svg width="18" height="18"><use href="#icon-burst"/></svg>
-        </div>
+        <div class="speech-badge" aria-hidden="true"><span class="sense"></span></div>
         <h2 class="text-2xl md:text-3xl font-bold">Kapcsolat</h2>
       </div>
 
@@ -328,12 +330,7 @@
       </p>
 
       <div class="mt-6 flex flex-wrap items-center gap-3">
-        <a href="mailto:tompos.ricsi@gmail.com" class="web-shot web-blast inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M2 12h20" stroke="white" stroke-width="2"/>
-            <path d="M4 8c4 2 12 2 16 0M4 16c4-2 12-2 16 0" stroke="white" stroke-width="1.5" opacity=".9"/>
-            <circle cx="12" cy="12" r="3" stroke="white" stroke-width="1.5" fill="none"/>
-          </svg>
+        <a href="mailto:tompos.ricsi@gmail.com" class="web-shot inline-flex items-center gap-2 bg-[var(--sp-red)] hover:bg-red-600 text-white font-semibold px-5 py-3 rounded-xl">
           Email
         </a>
         <a href="https://www.linkedin.com/in/rich%C3%A1rd-tompos-974949168/" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 px-5 py-3 rounded-xl">
@@ -358,14 +355,6 @@
       </a>
     </div>
   </footer>
-
-  <!-- ===== SVG sprite: comic "burst" ikon ===== -->
-  <svg width="0" height="0" style="position:absolute">
-    <symbol id="icon-burst" viewBox="0 0 24 24">
-      <path d="M12 2l2.2 4.4L19 6l-3.3 3 1 4.2-3.7-2-3.7 2 1-4.2L5 6l4.8.4L12 2Z"
-            fill="white" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-    </symbol>
-  </svg>
 
   <script>
     window.lucide && window.lucide.createIcons();
